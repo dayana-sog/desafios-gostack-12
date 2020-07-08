@@ -15,7 +15,7 @@ function App() {
   async function handleAddRepository() {
     const response = await api.post('/repositories', {
       title: `Título ${Date.now()}`,
-      url: 'https://github.com/IlgssonBraga/gostack11-challenge02',
+      url: 'https://github.com/dayana-sog/desafio-gostack-3',
       techs: ['Node.js', 'ReactJS']
     })
     const repository = response.data
