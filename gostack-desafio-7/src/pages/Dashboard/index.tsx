@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { FiTrash2 } from 'react-icons/fi';
 
+import { transitions } from 'polished';
 import income from '../../assets/income.svg';
 import outcome from '../../assets/outcome.svg';
 import total from '../../assets/total.svg';
@@ -29,8 +31,6 @@ interface Balance {
   total: string;
 }
 
-// [ ] should be able to upload a file
-
 const Dashboard: React.FC = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [balance, setBalance] = useState<Balance>({} as Balance);
@@ -59,7 +59,17 @@ const Dashboard: React.FC = () => {
       });
     }
     loadTransactions();
-  }, []);
+  }, [transactions]);
+
+  async function handleDelete(id: string): Promise<void> {
+    await api.delete(`/transactions/${id}`);
+
+    const updatedTransactions = transactions.filter(
+      transition => transition.id !== id,
+    );
+
+    setTransactions(updatedTransactions);
+  }
 
   return (
     <>
@@ -110,6 +120,12 @@ const Dashboard: React.FC = () => {
                   </td>
                   <td>{transaction.category.title}</td>
                   <td>{transaction.formattedDate}</td>
+                  <td>
+                    <FiTrash2
+                      size={18}
+                      onClick={() => handleDelete(transaction.id)}
+                    />
+                  </td>
                 </tr>
               </tbody>
             ))}
