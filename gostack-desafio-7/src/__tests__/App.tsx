@@ -22,10 +22,11 @@ jest.mock('../utils/formatValue.ts', () => ({
 }));
 
 import React from 'react';
-import { render, fireEvent, act } from '@testing-library/react';
+import { render, act } from '@testing-library/react';
 import MockAdapter from 'axios-mock-adapter';
 import api from '../services/api';
 import App from '../App';
+import { fireEvent } from '@testing-library/dom';
 
 const apiMock = new MockAdapter(api);
 
